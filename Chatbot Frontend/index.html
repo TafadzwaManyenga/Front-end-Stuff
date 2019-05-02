@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>
+		chatbot
+	</title>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+  crossorigin="anonymous"></script>
+
+  <link rel="stylesheet" type="text/css" href="form.css">
+	<!-- Compiled and minified CSS -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+	<div class="container">
+		<h3>Hello</h3>
+		<br>
+		<div class="card-panel hoverable">
+    		<span class="black-text">This is a chat tool example</span>
+  		</div>
+	</div>
+	<div class = "container">
+		
+		<div class = "fixed-action-btn">
+
+				<div id="chat">
+				<a href = "#!" class = "btn tooltipped btn-floating btn-large blue waves-effect" data-position="top" data-tooltip="Click here to chat!" onclick="openform()">
+					<i class = "material-icons">chat</i>
+			 	</a>
+
+				</div>
+
+			 	<div class="chat-popup" id=myform>
+			 		<form action="" class="form-container">
+			 			<h6 >Chat Window</h6>
+			 			<div class="message-history" id=msghistory>
+			 				<label for="msg"><b>Hi, how can we help?</b></label>
+			 			</div>
+			 			
+			 			<textarea id="message-box" placeholder="Type your message here..." name="msg" required></textarea>
+			 			<button class="btn waves-effect waves-light green" type="submit" name="action">Send
+    							<i class="material-icons right">send</i>
+  						</button>
+			 			<button class="btn waves-effect waves-light red" onclick="closeform()">Close
+    							<i class="material-icons right">cancel</i>
+  						</button>
+			 		</form>
+			 	</div>
+		</div>
+	</div>
+
+<!-- Compiled and minified JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script type="text/javascript">
+	function openform(){
+		document.getElementById("myform").style.display="block";
+		document.getElementById("chat").style.display="none";
+	}
+	function closeform(){
+		document.getElementById("myform").style.display="none";
+		document.getElementById("chat").style.display="block";
+	}
+
+	$("#message-box").on('input', function() {
+		var scroll_height = $("#message-box").get(0).scrollHeight;
+
+		$("#message-box").css('height', scroll_height + 'px');
+	});
+
+	document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.tooltipped');
+    var instances = M.Tooltip.init(elems, options);
+  });
+
+  // Or with jQuery
+
+  $(document).ready(function(){
+    $('.tooltipped').tooltip();
+  });
+</script>
+
+</body>
+</html>
