@@ -7,9 +7,7 @@
 	</title>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
   crossorigin="anonymous"></script>
-
-  <link rel="stylesheet" type="text/css" href="form.css">
-	<!-- Compiled and minified CSS -->
+  <link rel="stylesheet" type="text/css" href="style.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
@@ -22,51 +20,49 @@
   		</div>
 	</div>
 	<div class = "container">
-		
 		<div class = "fixed-action-btn">
-
 				<div id="chat">
-				<a href = "#!" class = "btn tooltipped btn-floating btn-large blue waves-effect" data-position="top" data-tooltip="Click here to chat!" onclick="openform()">
+				<a href = "" class = "btn tooltipped btn-floating btn-large blue waves-effect" data-position="top" data-tooltip="Click here to chat!" onclick="openform(); showHide()">
 					<i class = "material-icons">chat</i>
-			 	</a>
-
+				 </a>
 				</div>
-
-			 	<div class="chat-popup" id=myform>
-			 		<form action="" class="form-container">
-			 			<h6 >Chat Window</h6>
-			 			<div class="message-history" id=msghistory>
-			 				<label for="msg"><b>Hi, how can we help?</b></label>
-			 			</div>
-			 			
-			 			<textarea id="message-box" placeholder="Type your message here..." name="msg" required></textarea>
-			 			<button class="btn waves-effect waves-light green" type="submit" name="action">Send
+			 	<div class="chat-popup">
+					<div class="message-history" id=msghistory>
+						<h6 >Chat Window</h6>
+						<label for="msg"><b>Hi, how can we help?</b></label>
+						<ul id="messages" class = "no-bullets"></ul>
+					</div>
+			 		<form action="" class="form-container" id="myform">
+						<div class="border-box">
+			 				<textarea id="m" placeholder="Type your message here..." autocomplete="off"></textarea>
+						</div>
+			 			<button class="btn waves-effect waves-light green" >Send
     							<i class="material-icons right">send</i>
   						</button>
-			 			<button class="btn waves-effect waves-light red" onclick="closeform()">Close
+			 			<button class="btn waves-effect waves-light red" onclick="closeform(); showHide()">Close
     							<i class="material-icons right">cancel</i>
   						</button>
 			 		</form>
 			 	</div>
 		</div>
 	</div>
-
-<!-- Compiled and minified JavaScript -->
+<script>M.AutoInit();</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 <script type="text/javascript">
 	function openform(){
-		document.getElementById("myform").style.display="block";
+		var form = document.getElementById("myform");
+		form.style.display = "block";
 		document.getElementById("chat").style.display="none";
 	}
 	function closeform(){
-		document.getElementById("myform").style.display="none";
+		var form1 = document.getElementById("myform");
+		form1.style.display = "none";
 		document.getElementById("chat").style.display="block";
 	}
+	$("#m").on('input', function() {
+		var scroll_height = $("#m").get(0).scrollHeight;
 
-	$("#message-box").on('input', function() {
-		var scroll_height = $("#message-box").get(0).scrollHeight;
-
-		$("#message-box").css('height', scroll_height + 'px');
+		$("#m").css('height', scroll_height + 'px');
 	});
 
 	document.addEventListener('DOMContentLoaded', function() {
@@ -74,12 +70,29 @@
     var instances = M.Tooltip.init(elems, options);
   });
 
-  // Or with jQuery
-
-  $(document).ready(function(){
-    $('.tooltipped').tooltip();
+	function showHide() {
+  var x = document.getElementById("msghistory");
+  if (x.style.display === "none") {
+    x.style.display = "block";
+  } else {
+    x.style.display = "none";
+  }
+}
+</script>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  $(function () {
+    var socket = io();
+    $('form').submit(function(e){
+      e.preventDefault(); // prevents page reloading
+      socket.emit('chat message', $('#m').val());
+      $('#m').val('');
+      return false;
+    });
+    socket.on('chat message', function(msg){
+      $('#msghistory').append($('<li class="message" style="list-style-type:none;">').text(msg));
+    });
   });
 </script>
-
 </body>
 </html>

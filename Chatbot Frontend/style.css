@@ -1,0 +1,40 @@
+.form-container{
+	max-width: 300px;
+	padding:10px;
+	background-color: white;
+	padding-bottom: 10px;
+}
+
+.form-container textarea{
+	resize: none;
+	width: 100%;
+	padding: 3px;
+	margin: 5px 0 22px 0;
+	border: none;
+	background: #F1F1F1;
+	height: 30px;
+	max-width: 300px;
+}
+
+.chat-popup{
+	display: none;
+	position: fixed;
+	bottom: 0;
+	right: 15px;
+	border: 3px solid #f1f1f1;
+}
+
+.btn-send{
+	background-color: 103,172,91;
+}
+
+.message-history{
+	background-color: 103,172,91;
+}
+.border-box {
+	border: 2px solid black;
+	border-radius: 5px;
+	background-color: grey;
+}
+.border-box li { padding: 5px 10px; }
+.border-box li:nth-child(odd) { background: #eee; }
